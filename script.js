@@ -108,7 +108,7 @@ jQuery('document').ready(function(){
         pos1 = pos(0, m);
         pos2 = pos(0, n);
         Fpos1 = pos(0, m);
-        Fpos2 = pos(0, n)
+        Fpos2 = pos(0, n);
         field_make();
         field_update();
         

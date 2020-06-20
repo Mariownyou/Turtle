@@ -24,6 +24,9 @@ function make_field(f){
 }
 
 function field_update(f){
+    if (pos1 == fpos1 && pos2 == fpos2){
+        make_food(f);
+    }
     $( "#field" ).empty();
     for (let i = 0; i < f.length; i++){
         row = f[i].join(' ');
@@ -34,6 +37,12 @@ function field_update(f){
 function set_pos(f){
     f[fpos1][fpos2] = food;
     f[pos1][pos2] = turtle;
+}
+
+function make_food(f){
+    fpos1 = random(0, m);
+    fpos2 = random(0, n);
+    f[fpos1][fpos2] = food;
 }
 
 function random(min, max){

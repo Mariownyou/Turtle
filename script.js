@@ -1,28 +1,15 @@
-﻿var food = '🍅';
-var turtle = jQuery('#input1').val();
-var corn = jQuery('#input2').val();
+﻿var turtle = '🐢';
+var corn = '🌾';
+var food = '🍅';
 var field = [];
 var m = 10, n = 10;
 var pos1 = random(0, m);
 var pos2 = random(0, n);
 var fpos1 = random(0, m);
 var fpos2 = random(0, n);
+var nr = Math.round(n/2);
+var mr = Math.round(m/2);
 
-
-
-
-maze = [
-    ['🌵', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾'],
-    ['🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾'],
-    ['🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾'],
-    ['🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾'],
-    ['🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾'],
-    ['🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾'],
-    ['🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾'],
-    ['🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾'],
-    ['🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾'],
-    ['🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾', '🌾']
-]
 
 function make_field(f){
     for (let i = 0; i < m; i++){
@@ -36,18 +23,7 @@ function make_field(f){
     return f;
 }
 
-function field_print(f){
-    $( "#field" ).empty();
-    for (let i = 0; i < f.length; i++){
-        row = f[i].join(' ');
-        jQuery("#field").append(row+'<br>');
-    }
-}
-
 function field_update(f){
-    if (pos1 == fpos1 && pos2 == fpos2){
-        make_food();
-    }
     $( "#field" ).empty();
     for (let i = 0; i < f.length; i++){
         row = f[i].join(' ');
@@ -65,16 +41,70 @@ function random(min, max){
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
 }
+//------------------------------------------
+//функции движения
+function left(field){
+    if (pos2 == 0){
+        field[pos1][pos2]=corn;
+        field[pos1][pos2+=nr]=turtle;
+    }
+    field[pos1][pos2]=corn;
+    field[pos1][pos2-=1]=turtle;
+}
 
-jQuery('#play').on('click', function(){
-    make_field(field); // заполняем массив
-    set_pos(maze); // расставляем юниты
-    field_print(maze); // выводим массив
-    
+function right(field){
+    if (pos2 == n-1){
+        field[pos1][pos2]=corn;
+        field[pos1][pos2-=nr]=turtle;
+    }
+    field[pos1][pos2]=corn;
+    field[pos1][pos2+=1]=turtle;
+}
+
+function up(field){
+    if (pos1 == 0){
+        field[pos1][pos2]=corn;
+        field[pos1+=mr][pos2]=turtle;
+    }
+    field[pos1][pos2]=corn;
+    field[pos1-=1][pos2]=turtle;
+}
+
+function down(field){
+    if (pos1 == m-1){
+        field[pos1][pos2]=corn;
+        field[pos1-=mr][pos2]=turtle;
+    }
+    field[pos1][pos2]=corn;
+    field[pos1+=1][pos2]=turtle;
+}
+//------------------------------------------
+//функции движения
+
+jQuery('document').ready(function(){
+    jQuery('#play').on('click', function(){
+        turtle = jQuery('#input1').val();// обновляем черепашку
+        corn = jQuery('#input2').val();// обновляем поле
+        make_field(field); // заполняем массив
+        set_pos(field); // расставляем юниты
+        field_update(field); // выводим массив
+        
+    });
+
+    $('#up').on('click', function(){
+        up(field);
+        field_update(field);
+    });
+    $('#down').on('click', function(){
+        down(field);
+        field_update(field);
+    });
+    $('#left').on('click', function(){
+        left(field);
+        field_update(field);
+    });
+    $('#right').on('click', function(){
+        right(field);
+        field_update(field);
+    });
 });
-
-$('#up').on('click', function(){
-    maze[pos1][pos2] = corn;
-    maze[pos1-=1][pos2] = turtle;
-    field_update(maze);
-})

@@ -54,38 +54,30 @@ function random(min, max){
 //функции движения
 function left(field){
     if (pos2 == 0){
-        field[pos1][pos2]=corn;
-        field[pos1][pos2+=nr]=turtle;
+        pos2=n;
     }
-    field[pos1][pos2]=corn;
-    field[pos1][pos2-=1]=turtle;
+    pos2--;
 }
 
 function right(field){
     if (pos2 == n-1){
-        field[pos1][pos2]=corn;
-        field[pos1][pos2-=nr]=turtle;
+        pos2=-1;
     }
-    field[pos1][pos2]=corn;
-    field[pos1][pos2+=1]=turtle;
+    pos2++;
 }
 
 function up(field){
     if (pos1 == 0){
-        field[pos1][pos2]=corn;
-        field[pos1+=mr][pos2]=turtle;
+        pos1=m;
     }
-    field[pos1][pos2]=corn;
-    field[pos1-=1][pos2]=turtle;
+    pos1--;
 }
 
 function down(field){
     if (pos1 == m-1){
-        field[pos1][pos2]=corn;
-        field[pos1-=mr][pos2]=turtle;
+        pos1=-1;
     }
-    field[pos1][pos2]=corn;
-    field[pos1+=1][pos2]=turtle;
+    pos1++
 }
 //------------------------------------------
 //функции движения
@@ -102,18 +94,22 @@ jQuery('document').ready(function(){
 
     $('#up').on('click', function(){
         up(field);
+        make_field(field);
         field_update(field);
     });
     $('#down').on('click', function(){
         down(field);
+        make_field(field);
         field_update(field);
     });
     $('#left').on('click', function(){
         left(field);
+        make_field(field);
         field_update(field);
     });
     $('#right').on('click', function(){
         right(field);
+        make_field(field);
         field_update(field);
     });
 });

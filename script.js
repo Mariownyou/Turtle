@@ -18,8 +18,8 @@ function make_field(f){
             f[i][j] = corn;
         }
     }
-    f[pos1][pos2] = turtle;
     f[fpos1][fpos2] = food;
+    f[pos1][pos2] = turtle;
     return f;
 }
 
